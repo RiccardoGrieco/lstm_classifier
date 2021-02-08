@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<!-- Example launch file for lstm_classifier node with all its parameters-->
+<launch>
+   	<node pkg="lstm_classifier" name="lstm_classifier" type="lstm_classifier.py" output="screen">
+		<param name="service_name" value="lstm_classifier/service" type="string"/>
+	</node>
+</launch>

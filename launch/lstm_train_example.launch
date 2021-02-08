@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+
+<!-- Example launch file for lstm_train node  with all its parameters
+MANDATORY PARAMETERS:
+- dataset_train_file
+- dataset_test_file
+- num_input
+- num_classes
+- timesteps
+- hid_layer_dim_list
+- hid_layer_activation_list
+- train_windows
+- max_epochs
+- start_epochs
+- epochs_steps
+- validation_fraction
+- keras_verbosity
+- keras_optimizer
+- evaluation_start
+- score_threshold
+- score_sequence_threshold
+- models_directory
+- model_name
+-->
+<launch>
+
+   	<node pkg="lstm_classifier" name="LSTM_train" type="LSTM_train.py" output="screen">
+		<!-- Dataset parameters -->
+		<param name="dataset_train_file" value="$(find lstm_classifier)/dataset/training_set" type="string"/>
+		<param name="dataset_test_file" value="$(find lstm_classifier)/dataset/test_set" type="string"/>
+		<param name="num_input" value="3" type="int"/>
+		<param name="num_classes" value="4" type="int"/>
+		<param name="timesteps" value="120" type="int"/><!-- length of training sequences-->
+		
+		<!-- Model parameters -->
+		<rosparam param="hid_layer_dim_list">[8]</rosparam>
+		<rosparam param="hid_layer_activation_list">["relu"]</rosparam>
+
+		<!-- Train parameters -->
+		<rosparam param="train_windows">[60,120]</rosparam>
+		<param name="max_epochs" value="200" type="int"/>
+		<param name="start_epochs" value="100" type="int"/>
+		<param name="epochs_steps" value="100" type="int"/>
+		<param name="validation_fraction" value="0.0" type="double"/>
+		<param name="keras_verbosity" value="0" type="int"/>
+		<param name="keras_optimizer" value="adam" type="string"/>	
+ 
+		<!-- Evaluation parameters -->
+		<param name="evaluation_start" value="0" type="int"/>
+		<param name="score_threshold" value="0.5" type="double"/>
+		<param name="score_sequence_threshold" value="40" type="int"/>
+
+		<!-- Directories -->
+		<param name="models_directory" value="$(find lstm_classifier)/models" type="string"/>
+		<param name="model_name" value="model" type="string"/>
+		<param name="save_all_models" value="true" type="bool"/>
+
+		<!-- Classifications display-->
+		<!--Param save_test_classifications
+			Values:
+			0: Do not save any classification
+			1: Save classifications only for best graph according to evaluation method
+			2: Save classifications for every trained model-->
+		<param name="save_test_classifications" value="2" type="int"/>
+		<rosparam param="input_names">["Input 1","Input 2","Input 3"]</rosparam>
+		<rosparam param="classification_labels">["C1", "C2", "C3", "C4"]</rosparam>
+	</node>
+</launch>
